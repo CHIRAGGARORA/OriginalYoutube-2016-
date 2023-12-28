@@ -1,5 +1,5 @@
 //
-//  ViewCell.swift
+//  VideoCell.swift
 //  Youtube
 //
 //  Created by chirag arora on 27/12/23.
@@ -12,6 +12,32 @@ class VideoCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpViews()
+    }
+    
+    var video: Video? {
+        didSet {
+            titleLabel.text = video?.title
+            
+            if let thumbnailImage = video?.thumbnailImageName {
+                thumbnailImageView.image = UIImage(named: thumbnailImage)
+            }
+            
+            if let profileImageName = video?.channel?.profileImageName {
+                userProfileImageview.image = UIImage(named: profileImageName)
+            
+                
+            }
+            
+            if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
+                
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                
+                let subtitletext = "\(channelName) • \(numberFormatter.string(from: numberOfViews)!) • 3 years ago "
+                subtitleTextView.text = subtitletext
+            }
+            
+        }
     }
     
     let thumbnailImageView: UIImageView = {

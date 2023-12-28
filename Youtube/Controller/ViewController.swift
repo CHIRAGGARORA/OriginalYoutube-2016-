@@ -15,6 +15,27 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             return .lightContent
         }
     
+    var videos: [Video] = {
+        var frankSinatraChannel = Channel()
+        frankSinatraChannel.name = "Frank Sinatra Channel"
+        frankSinatraChannel.profileImageName = "FrankSinatraProfile"
+        
+        var DeutschlandVideo = Video()
+        DeutschlandVideo.title = "DEUTSCHLAND (Rammstein cover)"
+        DeutschlandVideo.thumbnailImageName = "deuscheland"
+        DeutschlandVideo.channel = frankSinatraChannel
+        DeutschlandVideo.numberOfViews = 23467787
+        
+        
+        var FrankSinatraVideo = Video()
+        FrankSinatraVideo.title = "FrankSinatra Classic Hits"
+        FrankSinatraVideo.thumbnailImageName = "frankSinatra"
+        FrankSinatraVideo.channel = frankSinatraChannel
+        FrankSinatraVideo.numberOfViews = 456564556
+        
+        return [DeutschlandVideo, FrankSinatraVideo]
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,18 +56,57 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView?.backgroundColor = .white
         
         collectionView.register(VideoCell.self, forCellWithReuseIdentifier: "cellId")
+        
+        collectionView.contentInset = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+
+        setupMenuBar()
 
         
-
+        setupNavBarButtons()
         
     }
     
+    func setupNavBarButtons() {
+        let searchImage = UIImage(systemName: "magnifyingglass")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        let moreImage = UIImage(systemName: "ellipsis.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        
+        let searchBarButton = UIBarButtonItem(image: searchImage, style: .plain, target: self, action: #selector(handleSearch))
+        
+        let moreButton = UIBarButtonItem(image: moreImage, style: .plain, target: self, action: #selector(handleMore))
+        
+        navigationItem.rightBarButtonItems = [moreButton,searchBarButton]
+    }
+    
+    @objc func handleMore() {
+        print(321)
+    }
+    
+    @objc func handleSearch() {
+        print(123)
+    }
+    
+    let menuBar: MenuBar = {
+        let mb = MenuBar()
+        return mb
+    }()
+    
+    private func setupMenuBar() {
+        view.addSubview(menuBar)
+        menuBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : menuBar]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(50)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : menuBar]))
+    }
+    
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return videos.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! VideoCell
+        
+        cell.video = videos[indexPath.item]
        
         
         return cell
