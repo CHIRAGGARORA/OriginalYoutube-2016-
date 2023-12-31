@@ -18,15 +18,12 @@ class VideoCell: UICollectionViewCell {
         didSet {
             titleLabel.text = video?.title
             
-            if let thumbnailImage = video?.thumbnailImageName {
-                thumbnailImageView.image = UIImage(named: thumbnailImage)
-            }
             
-            if let profileImageName = video?.channel?.profileImageName {
-                userProfileImageview.image = UIImage(named: profileImageName)
+            setupThumbnailImage()
             
-                
-            }
+            setupProfileImage()
+            
+            
             
             if let channelName = video?.channel?.name, let numberOfViews = video?.numberOfViews {
                 
@@ -37,6 +34,21 @@ class VideoCell: UICollectionViewCell {
                 subtitleTextView.text = subtitletext
             }
             
+        }
+    }
+    
+    func setupProfileImage() {
+        if let profileImageUrl = video?.channel?.profileImageName {
+            
+            userProfileImageview.loadImageUsingUrlString(urlString: profileImageUrl)
+        }
+    }
+    
+    
+    func setupThumbnailImage() {
+        if let thumbnailImageUrl = video?.thumbnailImageName {
+            
+            thumbnailImageView.loadImageUsingUrlString(urlString: thumbnailImageUrl)
         }
     }
     
@@ -57,6 +69,7 @@ class VideoCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 22
         imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
         // translatesAutoresizingMaskIntoConstraints = false
         // this tell iOS not to create Auto Layout constraints automatically
         return imageView
@@ -75,6 +88,7 @@ class VideoCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "DEUTSCHLAND (Rammstein cover)"
+        label.numberOfLines = 2
         return label
     }()
     

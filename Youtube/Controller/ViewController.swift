@@ -15,29 +15,78 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
             return .lightContent
         }
     
-    var videos: [Video] = {
-        var frankSinatraChannel = Channel()
-        frankSinatraChannel.name = "Frank Sinatra Channel"
-        frankSinatraChannel.profileImageName = "FrankSinatraProfile"
-        
-        var DeutschlandVideo = Video()
-        DeutschlandVideo.title = "DEUTSCHLAND (Rammstein cover)"
-        DeutschlandVideo.thumbnailImageName = "deuscheland"
-        DeutschlandVideo.channel = frankSinatraChannel
-        DeutschlandVideo.numberOfViews = 23467787
-        
-        
-        var FrankSinatraVideo = Video()
-        FrankSinatraVideo.title = "FrankSinatra Classic Hits"
-        FrankSinatraVideo.thumbnailImageName = "frankSinatra"
-        FrankSinatraVideo.channel = frankSinatraChannel
-        FrankSinatraVideo.numberOfViews = 456564556
-        
-        return [DeutschlandVideo, FrankSinatraVideo]
-    }()
+//    var videos: [Video] = {
+//        var frankSinatraChannel = Channel()
+//        frankSinatraChannel.name = "Frank Sinatra Channel"
+//        frankSinatraChannel.profileImageName = "FrankSinatraProfile"
+//        
+//        var DeutschlandVideo = Video()
+//        DeutschlandVideo.title = "DEUTSCHLAND (Rammstein cover)"
+//        DeutschlandVideo.thumbnailImageName = "deuscheland"
+//        DeutschlandVideo.channel = frankSinatraChannel
+//        DeutschlandVideo.numberOfViews = 23467787
+//        
+//        
+//        var FrankSinatraVideo = Video()
+//        FrankSinatraVideo.title = "FrankSinatra Classic Hits"
+//        FrankSinatraVideo.thumbnailImageName = "frankSinatra"
+//        FrankSinatraVideo.channel = frankSinatraChannel
+//        FrankSinatraVideo.numberOfViews = 456564556
+//        
+//        return [DeutschlandVideo, FrankSinatraVideo]
+//    }()
+    
+    var videos: [Video]?
+    
+    func fetchVideos() {
+        let url = URL(string: "https://s3-us-west-2.amazonaws.com/youtubeassets/home.json")
+        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+                
+                self.videos = [Video]()
+                
+                for dictionary in json as! [[String: AnyObject]] {
+                    // downcasting json data to an array of dictionary objects
+                    
+                    let video = Video()
+                    video.title = dictionary["title"] as? String // Downcasted as a String
+                    video.thumbnailImageName = dictionary["thumbnail_image_name"] as? String
+                    
+                    let channelDictionary = dictionary["channel"] as! [String: AnyObject]
+                    
+                    let channel = Channel()
+                    channel.name = channelDictionary["name"] as? String
+                    channel.profileImageName = channelDictionary["profile_image_name"] as? String
+                    
+                    video.channel = channel
+                    
+                    self.videos?.append(video)
+                 
+                }
+                
+                self.collectionView?.reloadData()
+                
+            } catch let jsonError{
+                print(jsonError)
+            }
+            
+            
+            
+            
+        }.resume()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchVideos()
         
         navigationController?.view.backgroundColor = UIColor.rgb(red: 230, green: 32, blue: 31)
         navigationController?.navigationBar.barTintColor = UIColor.rgb(red: 230, green: 32, blue: 31)
@@ -100,13 +149,14 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videos.count
+        
+        return videos?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! VideoCell
         
-        cell.video = videos[indexPath.item]
+        cell.video = videos?[indexPath.item]
        
         
         return cell
