@@ -52,8 +52,8 @@ class VideoCell: UICollectionViewCell {
         }
     }
     
-    let thumbnailImageView: UIImageView = {
-        let imageView = UIImageView()
+    let thumbnailImageView: customImageView = {
+        let imageView = customImageView()
         imageView.image = UIImage(named: "deuscheland")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -63,8 +63,8 @@ class VideoCell: UICollectionViewCell {
         return imageView
     }()
     
-    let userProfileImageview: UIImageView = {
-        let imageView = UIImageView()
+    let userProfileImageview: customImageView = {
+        let imageView = customImageView()
         imageView.image = UIImage(named: "rammstein")
         imageView.layer.cornerRadius = 22
         imageView.layer.masksToBounds = true
