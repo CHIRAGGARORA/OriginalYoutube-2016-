@@ -17,6 +17,7 @@
 		E22092BF2B3C6794004E3C69 /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22092BE2B3C6794004E3C69 /* VideoCell.swift */; };
 		E22092C22B3D2B9D004E3C69 /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22092C12B3D2B9D004E3C69 /* MenuBar.swift */; };
 		E22092C52B3DE266004E3C69 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22092C42B3DE266004E3C69 /* Video.swift */; };
+		E234146B2B43FB7C00B86D8E /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234146A2B43FB7C00B86D8E /* SettingsLauncher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E22092BE2B3C6794004E3C69 /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 		E22092C12B3D2B9D004E3C69 /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
 		E22092C42B3DE266004E3C69 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		E234146A2B43FB7C00B86D8E /* SettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				E22092AA2B3AFD35004E3C69 /* ViewController.swift */,
+				E234146A2B43FB7C00B86D8E /* SettingsLauncher.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				E22092A72B3AFD35004E3C69 /* AppDelegate.swift in Sources */,
 				E22092C22B3D2B9D004E3C69 /* MenuBar.swift in Sources */,
 				E22092A92B3AFD35004E3C69 /* SceneDelegate.swift in Sources */,
+				E234146B2B43FB7C00B86D8E /* SettingsLauncher.swift in Sources */,
 				E22092BC2B3C602E004E3C69 /* Extensions.swift in Sources */,
 				E22092C52B3DE266004E3C69 /* Video.swift in Sources */,
 				E22092BF2B3C6794004E3C69 /* VideoCell.swift in Sources */,
