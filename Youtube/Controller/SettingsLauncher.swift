@@ -7,7 +7,7 @@
 
 import UIKit
 
-class setting: NSObject {
+class Setting: NSObject {
     let name: String
     let imageName: String
     
@@ -36,9 +36,11 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
     let cellId = "cellId"
     let cellHeight: CGFloat = 55
     
-    let settings: [setting] = {
-        return [setting(name: "Settings", imageName: "gear"), setting(name: "terms & Privacy Policy", imageName: "lock.fill"), setting(name: "send Feedback", imageName: "message.fill"), setting(name: "Help", imageName: "questionmark.circle.fill"), setting(name: "Switch Account", imageName: "person.circle.fill"), setting(name: "Cancel", imageName: "x.circle.fill")]
+    let settings: [Setting] = {
+        return [Setting(name: "Settings", imageName: "gear"), Setting(name: "Terms & Privacy Policy", imageName: "lock.fill"), Setting(name: "Send Feedback", imageName: "message.fill"), Setting(name: "Help", imageName: "questionmark.circle.fill"), Setting(name: "Switch Account", imageName: "person.circle.fill"), Setting(name: "Cancel", imageName: "x.circle.fill")]
     }()
+    
+    var ViewController: ViewController?
     
     @objc func showSettings() {
         
@@ -71,14 +73,19 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
         }
     }
     
-    @objc func handleDismiss() {
-        UIView.animate(withDuration: 0.5) {
+    @objc func handleDismiss(setting: Setting) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
+            
             self.blackView.alpha = 0
             
             guard let window = UIApplication.shared.windows.first(where: {$0.isKeyWindow}) else { return }
-                self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)        
+                self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
             
+        } completion: { Bool in
             
+            if setting.name != "Cancel" {
+                self.ViewController?.showControllerForSettings(setting: setting)
+            }
         }
     }
     
@@ -101,6 +108,20 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let setting = self.settings[indexPath.item]
+
+        handleDismiss(setting: setting)
+       
+        
+
+        
+        
+    
     }
     
     override init() {

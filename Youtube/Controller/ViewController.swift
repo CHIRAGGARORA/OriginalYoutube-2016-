@@ -128,13 +128,31 @@ class ViewController: UICollectionViewController, UICollectionViewDelegateFlowLa
         navigationItem.rightBarButtonItems = [moreButton,searchBarButton]
     }
     
-    let settingsLauncher = SettingsLauncher()
+    
+    //Everytime we do lazy var instansiation code inside the block is only called once if this variable is nil second time variable is not nil only occurs when we are setting our app
+    lazy var settingsLauncher: SettingsLauncher = {
+        let launcher = SettingsLauncher()
+        launcher.ViewController = self
+        return launcher
+    }()
     
     @objc func handleMore() {
-        
         settingsLauncher.showSettings()
         
-    }    
+        
+        
+    }
+    
+    func showControllerForSettings(setting: Setting) {
+        let dummySettingsViewController = UIViewController()
+        dummySettingsViewController.view.backgroundColor = UIColor.white
+        dummySettingsViewController.navigationItem.title = setting.name
+        navigationController?.navigationBar.tintColor = .white
+        
+        // For changing Title color in NavigatioController
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.pushViewController(dummySettingsViewController, animated: true)
+    }
 
     
     @objc func handleSearch() {

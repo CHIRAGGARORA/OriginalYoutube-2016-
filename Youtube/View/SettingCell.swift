@@ -20,7 +20,7 @@ class SettingCell: UICollectionViewCell {
     }
     
     
-    var setting: setting? {
+    var setting: Setting? {
         didSet {
             nameLabel.text = setting?.name
             
