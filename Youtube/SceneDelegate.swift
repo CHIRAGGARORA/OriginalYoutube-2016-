@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.addSubview(statusBarBackgroundView)
         statusBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         window?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : statusBarBackgroundView]))
-        window?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(33)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : statusBarBackgroundView]))
+        window?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0(45)]", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0" : statusBarBackgroundView]))
         
     }
 

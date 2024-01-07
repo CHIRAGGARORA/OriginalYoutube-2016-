@@ -8,14 +8,23 @@
 import UIKit
 
 class Setting: NSObject {
-    let name: String
+    let name: settingName
     let imageName: String
     
-    init(name: String, imageName: String) {
+    init(name: settingName, imageName: String) {
         self.name = name
         self.imageName = imageName
     }
     
+}
+
+enum settingName: String { // enum is a typesafe way we can change text anytime functionality remains
+    case Cancel = "Cancel"
+    case Setting = "Settings"
+    case PrivacyPolicy = "Terms & Privacy Policy"
+    case SendFeedback = "Send Feedback"
+    case Help = "Help"
+    case SwitchAccount = "Switch Account"
 }
 
 class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -36,8 +45,10 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
     let cellId = "cellId"
     let cellHeight: CGFloat = 55
     
+    
     let settings: [Setting] = {
-        return [Setting(name: "Settings", imageName: "gear"), Setting(name: "Terms & Privacy Policy", imageName: "lock.fill"), Setting(name: "Send Feedback", imageName: "message.fill"), Setting(name: "Help", imageName: "questionmark.circle.fill"), Setting(name: "Switch Account", imageName: "person.circle.fill"), Setting(name: "Cancel", imageName: "x.circle.fill")]
+       
+        return [Setting(name: .Setting, imageName: "gear") , Setting(name: .PrivacyPolicy, imageName: "lock.fill"), Setting(name: .SendFeedback, imageName: "message.fill"), Setting(name: .Help, imageName: "questionmark.circle.fill"), Setting(name: .SwitchAccount, imageName: "person.circle.fill"), Setting(name: .Cancel, imageName: "x.circle.fill")]
     }()
     
     var ViewController: ViewController?
@@ -83,7 +94,7 @@ class SettingsLauncher: NSObject, UICollectionViewDelegate, UICollectionViewData
             
         } completion: { Bool in
             
-            if setting.name != "Cancel" {
+            if setting.name != .Cancel {
                 self.ViewController?.showControllerForSettings(setting: setting)
             }
         }
