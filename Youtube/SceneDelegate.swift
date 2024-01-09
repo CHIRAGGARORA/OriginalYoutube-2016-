@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .horizontal
         window?.rootViewController = UINavigationController(rootViewController: ViewController(collectionViewLayout: layout))
         
         
